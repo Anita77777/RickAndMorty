@@ -19,6 +19,10 @@ function convertOurDataToHTML(profiles) {
   profiles.forEach((character) => {
     const listElement = document.createElement("li");
     listElement.textContent = character.name;
+    const imgElement = document.createElement("img");
+    imgElement.setAttribute("src", character.image);
+    listElement.append(imgElement);
+    //console.log(imgElement);
     unorderedList.append(listElement);
   });
 }
