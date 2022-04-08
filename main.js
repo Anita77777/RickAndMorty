@@ -22,14 +22,22 @@ function convertOurDataToHTML(profiles) {
     const imgElement = document.createElement("img");
     imgElement.setAttribute("src", character.image);
     listElement.append(imgElement);
-    //console.log(imgElement);
     unorderedList.append(listElement);
   });
 }
 
 document.querySelector("#app").innerHTML = `
 <h1>Rick and Morty Profiles</h1>
-
+<form>
+  <fieldset>
+    <input type="radio" name="ram-filter" value="alive" checked>
+    <label>Alive</label>
+    <input type="radio" name="ram-filter" value="dead">
+    <label>Dead</label>
+    <input type="radio" name="ram-filter" value="unknown">
+    <label>Unknown</label>
+  </fieldset>
+</form>
 <button class="button" data-js="button__random">Random</button>
 
 `;
