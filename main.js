@@ -25,6 +25,8 @@ function convertOurDataToHTML(profiles) {
     unorderedList.append(listElement);
   });
 
+
+  
   const ramform = document.querySelector("[data-js='ramform']");
   let currentFilter = 'all';
 
@@ -38,7 +40,7 @@ function convertOurDataToHTML(profiles) {
     const divResults = document.querySelector("[data-js='filterResult']");
     divResults.innerHTML = ``;
     const unorderedList = document.createElement("ul");
-    data.results
+    character
       .filter(character => character.status.includes(currentFilter) || currentFilter === 'all')
       .forEach(character => {
         const listElement = document.createElement("li");
