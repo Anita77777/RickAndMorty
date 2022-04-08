@@ -12,8 +12,6 @@ async function fetchRam(url) {
   }
 }
 
-fetchRam(url);
-
 function convertOurDataToHTML(profiles) {
   const unorderedList = document.createElement("ul");
   document.body.append(unorderedList);
@@ -26,6 +24,13 @@ function convertOurDataToHTML(profiles) {
 }
 
 document.querySelector("#app").innerHTML = `
-  <h1>Hello Vite!</h1>
-  
+<h1>Rick and Morty Profiles</h1>
+
+<button class="button" data-js="button__random">Random</button>
+
 `;
+
+const buttonR = document.querySelector('[data-js="button__random"]');
+buttonR.addEventListener("click", () => {
+  fetchRam(url);
+});
