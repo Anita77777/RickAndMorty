@@ -24,34 +24,6 @@ function convertOurDataToHTML(profiles) {
     listElement.append(imgElement);
     unorderedList.append(listElement);
   });
-
-
-  
-  const ramform = document.querySelector("[data-js='ramform']");
-  let currentFilter = 'all';
-
-  ramform.addEventListener("change", () => {
-    // Überschreibt den Value der ausgewählten Box in currentFilter
-    currentFilter = ramform.elements["ram-filter"].value;
-    filterCharacter();
-  })
-
-  function filterCharacter() {
-    const divResults = document.querySelector("[data-js='filterResult']");
-    divResults.innerHTML = ``;
-    const unorderedList = document.createElement("ul");
-    character
-      .filter(character => character.status.includes(currentFilter) || currentFilter === 'all')
-      .forEach(character => {
-        const listElement = document.createElement("li");
-        listElement.textContent = character.name;
-        const imgElement = document.createElement("img");
-        imgElement.setAttribute("src", character.image);
-        listElement.append(imgElement);
-        unorderedList.append(listElement);
-        divResults.append(unorderedList);
-      })
-  }
 }
 
 document.querySelector("#app").innerHTML = `
@@ -77,10 +49,40 @@ buttonR.addEventListener("click", () => {
   fetchRam(url);
 });
 
+async function fetchFilter(url) {
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    filterCharacter(data.results);
+  } catch (error) {
+    console.error(`Upps das war ein Fehler: ${error}`);
+  }
+}
 
+const ramform = document.querySelector("[data-js='ramform']");
+let currentFilter = "all";
 
+ramform.addEventListener("change", () => {
+  // Überschreibt den Value der ausgewählten Box in currentFilter
+  currentFilter = ramform.elements["ram-filter"].value;
+  fetchFilter();
+});
 
-
-
-
-  
+function filterCharacter(profiles) {
+  const unorderedList = document.createElement("ul");
+  document.body.innerHTML = ``;
+  profiles
+    .filter(
+      (character) =>
+        character.status.includes(currentFilter) || currentFilter === "all"
+    )
+    .forEach((character) => {
+      const listElement = document.createElement("li");
+      listElement.textContent = character.name;
+      const imgElement = document.createElement("img");
+      imgElement.setAttribute("src", character.image);
+      listElement.append(imgElement);
+      unorderedList.append(listElement);
+    });
+  document.body.append(unorderedList);
+}
